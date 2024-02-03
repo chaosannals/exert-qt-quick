@@ -8,6 +8,25 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    Ball {
+        id: ball
+    }
+
+    Text {
+        id: tip
+        text: "主窗口"
+        font.pixelSize: 20
+        anchors.centerIn: parent
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: {
+            ball.show()
+        }
+    }
+
     InputPanel {
         id: inputPanel
         z: 99
