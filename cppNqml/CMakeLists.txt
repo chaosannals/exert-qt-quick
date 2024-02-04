@@ -10,6 +10,7 @@ find_package(Qt6 6.2 COMPONENTS Quick Qml LinguistTools REQUIRED)
 qt_add_executable(appcppNqml
     main.cpp
     segmentdemo.cpp
+    globaldemo.cpp
 )
 
 qt_add_qml_module(appcppNqml

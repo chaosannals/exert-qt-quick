@@ -3,8 +3,10 @@
 
 #include <QLocale>
 #include <QTranslator>
+#include <QQmlContext>
 
 #include "segmentdemo.h"
+#include "globaldemo.h"
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +26,13 @@ int main(int argc, char *argv[])
 
 
     QQmlApplicationEngine engine;
+
+    // 注册类
     qmlRegisterType<SegmentDemo>("SegmentDemo", 1, 0, "SegmentObject");
+
+    // 注册对象
+    GlobalDemo *globalDemo = new GlobalDemo();
+    engine.rootContext()->setContextProperty("globalDemo", globalDemo);
 
     const QUrl url(u"qrc:/cppNqml/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

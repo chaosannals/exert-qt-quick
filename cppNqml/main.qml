@@ -14,18 +14,38 @@ Window {
         id: segment
     }
 
-    Text {
-        id: tip
-        text: segment.image_path
-        font.pixelSize: 20
+    Column {
+        id: column1
+        x: 0
+        y: 0
+        width: parent.width
+        height: parent.height
         anchors.centerIn: parent
-    }
+        spacing: 5
 
-    Text {
-        id: tip2
-        text: segment.count.toString()
-        font.pixelSize: 20
-        anchors.centerIn: parent
+        Text {
+            id: tip
+            text: segment.image_path
+            font.pixelSize: 20
+            // anchors 这个会干扰父级 column 的布局，确保 column 子元素不能有任何一个带这个属性。
+//            anchors.centerIn: parent
+        }
+
+        Text {
+            id: tip2
+            text: segment.count.toString()
+            font.pixelSize: 20
+            // anchors 这个会干扰父级 column 的布局，确保 column 子元素不能有任何一个带这个属性。
+//            anchors.centerIn: parent
+        }
+
+        Text {
+            id: tip3
+            text: globalDemo.timestamp.toString()
+            font.pixelSize: 20
+            // anchors 这个会干扰父级 column 的布局，确保 column 子元素不能有任何一个带这个属性。
+//            anchors.centerIn: parent
+        }
     }
 
     MouseArea {

@@ -20,7 +20,7 @@ signals:
     void image_path_changed();
     void count_changed();
 
-    void segment_call();
+    void segment_call(); // TODO
 protected:
     QString image_path;
     int count;
