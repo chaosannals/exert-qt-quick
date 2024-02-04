@@ -1,5 +1,11 @@
 # exert qt quick
 
+## 布局
+
+Column 和 Row 很弱，没有权重，对子元素修改很差。
+基本依赖定式布局 通过 id 拿到 width height 去做加减。
+
+
 ## 参考的开源库
 
 [FluentUI](https://github.com/zhuzichu520/FluentUI)
