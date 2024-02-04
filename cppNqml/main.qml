@@ -46,6 +46,19 @@ Window {
             // anchors 这个会干扰父级 column 的布局，确保 column 子元素不能有任何一个带这个属性。
 //            anchors.centerIn: parent
         }
+
+        Image {
+            id: image1
+            width: parent.width
+            height: parent.width
+//            Image.TileVertically
+            fillMode: Image.PreserveAspectFit
+//            fillMode: Image.PreserveAspectCrop
+//            fillMode: Image.Pad
+//            fillMode: Image.Stretch
+
+            source: segment.image_path
+        }
     }
 
     MouseArea {
