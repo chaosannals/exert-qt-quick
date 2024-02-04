@@ -5,7 +5,7 @@ project(webviewdemo VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# WebView 必须用 VC++ 编译， Mingw的 Qt 会被判定为 linux 导致无法找到 Webview
+# Windows 下 WebView 必须用 VC++ 编译， Mingw的 Qt 会被判定为 linux 导致无法找到 Webview
 find_package(Qt6 6.2 COMPONENTS Quick WebView REQUIRED)
 
 qt_add_executable(appwebviewdemo
