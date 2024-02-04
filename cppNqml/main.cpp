@@ -4,6 +4,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QQmlContext>
+#include <QTimer>
 
 #include "segmentdemo.h"
 #include "globaldemo.h"
@@ -33,6 +34,13 @@ int main(int argc, char *argv[])
     // 注册对象
     GlobalDemo *globalDemo = new GlobalDemo();
     engine.rootContext()->setContextProperty("globalDemo", globalDemo);
+
+    // 计时器
+    QTimer *timer = new QTimer(&engine);
+    QObject::connect(timer, &QTimer::timeout, &app, [globalDemo] {
+        globalDemo->set_timestamp(globalDemo->get_timestamp() + 1);
+    });
+    timer->start(1000);
 
     const QUrl url(u"qrc:/cppNqml/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
