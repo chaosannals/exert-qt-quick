@@ -19,6 +19,8 @@ qt_add_qml_module(appsimpledemo
 
 # 翻译(点构建时才会生成文件)
 # 工具居然忽略了 qml 里 qsTr 需要翻译的文本 TODO
+# 安卓的需要把 QM 文件指向 resources 目录
+# Qt 的工具还是一如既往的不稳定。
 qt_add_translations(
     appsimpledemo
     RESOURCE_PREFIX
@@ -26,7 +28,6 @@ qt_add_translations(
     TS_FILES
     i18n/simpledemo_zh.ts
 )
-
 
 set_target_properties(appsimpledemo PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
