@@ -18,6 +18,20 @@ class cppdemo_service : public DemoBook::Service {
 		std::cout << "id:" << request->id() << std::endl;
 		return Status::OK;
 	}
+
+	Status GetByStream(::grpc::ServerContext* context, const ::grpcdemo::DemoBookRequest* request, ::grpc::ServerWriter< ::grpcdemo::DemoBookReply>* writer) {
+		std::cout << "s id:" << request->id() << std::endl;
+		context->set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
+		DemoBookReply reply;
+		reply.set_name("bbbb");
+		writer->Write(reply);
+		//writer->WriteLast(reply, {});// 不调用也是会退出
+		for (int i = 0; i < 10; ++i) {
+			Sleep(1000);
+			writer->Write(reply);
+		}
+		return Status::OK;
+	}
 };
 
 int main() {

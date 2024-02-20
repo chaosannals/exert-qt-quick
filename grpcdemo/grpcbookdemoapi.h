@@ -12,6 +12,7 @@ class GrpcBookDemoApi : public QObject
     QML_ELEMENT
     QML_SINGLETON
     Q_PROPERTY(QString host READ getHost WRITE setHost NOTIFY hostChanged)
+    Q_PROPERTY(GrpcBookDemoApi::State state READ getState NOTIFY stateChanged)
 public:
     enum State {
         Disconnected = 0,
@@ -26,11 +27,18 @@ public:
     QString getHost() const { return host; }
     void setHost(const QString &v) { host = v; emit hostChanged(); }
 
-    Q_INVOKABLE State login();
+    State getState() const { return state; }
+
+    Q_INVOKABLE void login();
     Q_INVOKABLE QString find(int id);
 signals:
     void hostChanged();
+    void stateChanged();
+    void authFailed();
+    void networkError(const QString &);
 private:
+    void setState(const State v) { state = v; emit stateChanged(); }
+
     QString host;
     State state;
     grpcdemo::DemoBook::Client *client;

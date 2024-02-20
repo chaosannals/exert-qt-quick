@@ -4,6 +4,7 @@ package grpcdemo;
 
 service DemoBook {
     rpc GetName (DemoBookRequest) returns (DemoBookReply) {}
+    rpc GetByStream (DemoBookRequest) returns (stream DemoBookReply) {}
 }
 
 message DemoBookRequest {
