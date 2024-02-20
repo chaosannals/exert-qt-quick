@@ -1,4 +1,5 @@
 #include <iostream>
+#include <format>
 #include <grpcpp/grpcpp.h>
 #include <demo.pb.h>
 #include <demo.grpc.pb.h>
@@ -12,14 +13,14 @@ using grpcdemo::DemoBookRequest;
 using grpcdemo::DemoBookReply;
 
 class cppdemo_service : public DemoBook::Service {
-	Status GetName(ServerContext* context, const DemoBookRequest* request, DemoBookReply* response) {
+	Status GetName(ServerContext* context, const DemoBookRequest* request, DemoBookReply* response) override {
 		context->set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
 		response->set_name("aaa");
 		std::cout << "id:" << request->id() << std::endl;
 		return Status::OK;
 	}
 
-	Status GetByStream(::grpc::ServerContext* context, const ::grpcdemo::DemoBookRequest* request, ::grpc::ServerWriter< ::grpcdemo::DemoBookReply>* writer) {
+	Status GetByStream(::grpc::ServerContext* context, const DemoBookRequest* request, ::grpc::ServerWriter<DemoBookReply>* writer) override {
 		std::cout << "s id:" << request->id() << std::endl;
 		context->set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
 		DemoBookReply reply;
@@ -29,6 +30,21 @@ class cppdemo_service : public DemoBook::Service {
 		for (int i = 0; i < 10; ++i) {
 			Sleep(1000);
 			writer->Write(reply);
+		}
+		return Status::OK;
+	}
+
+	Status GetByStream2(::grpc::ServerContext* context, ::grpc::ServerReaderWriter<DemoBookReply,DemoBookRequest>* stream)  override {
+		DemoBookRequest request;
+		while (stream->Read(&request)) {
+			auto id = request.id();
+			std::cout << "s2 id:" << id << std::endl;
+			if (id == 0) {
+				break;
+			}
+			DemoBookReply reply;
+			reply.set_name(std::format("cccc {}", id));
+			stream->Write(reply);
 		}
 		return Status::OK;
 	}
